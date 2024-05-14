@@ -13,19 +13,9 @@ ggplot() +
 import geopandas as gpd
 import matplotlib.pyplot as plt
 
-# 데이터 로드 (예시 데이터를 사용, 실제 데이터에 맞게 수정 필요)
-# 서울 시군구의 GeoDataFrame을 가져옵니다.
+# df = 별도 데이터
+# 서울 시군구 GeoDataFrame
 gdf = gpd.read_file('seoul_shapefile.shp')
-
-# 개업 현황 데이터를 가져옵니다. 예시로 임의의 데이터를 사용합니다.
-# 실제로는 CSV 파일 등에서 데이터를 로드해야 합니다.
-import pandas as pd
-
-data = {
-    'gu': ['강남구', '강동구', '강북구', '강서구', '관악구'],  # 실제 구 이름들
-    'open': [20, 30, 15, 25, 10]  # 예시 개업 현황 데이터
-}
-df = pd.DataFrame(data)
 
 # GeoDataFrame에 데이터를 병합합니다.
 gdf = gdf.merge(df, left_on='gu_name_column', right_on='gu', how='left')  # 'gu_name_column'을 실제 컬럼명으로 수정
