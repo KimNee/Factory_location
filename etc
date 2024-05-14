@@ -1,4 +1,4 @@
-#1 편의점 입지 - 5년간 서울 시군구별 개업 현황
+#1 편의점 입지 - 5년간 서울 시군구별 개업 현황 // R언어
 ggplot() +
   geom_polygon(data = M, aes(x = long, y = lat, group = group, fill = open), color = "white") +
   scale_fill_gradient(low = "#D4F4FA", high = "#3DB7CC", space = "Lab", guide = "colourbar") +
@@ -7,3 +7,46 @@ ggplot() +
   theme(legend.position = c(.15, .85),
         text = element_text(size=16, family='pen2')) +
   geom_text(data = gu_name, aes(x = long, y = lat, label = paste(seoulgu, open, sep = "\n")), family = 'pen2')
+
+
+#1-1 파이썬 언어로 수정
+import geopandas as gpd
+import matplotlib.pyplot as plt
+
+# 데이터 로드 (예시 데이터를 사용, 실제 데이터에 맞게 수정 필요)
+# 서울 시군구의 GeoDataFrame을 가져옵니다.
+gdf = gpd.read_file('seoul_shapefile.shp')
+
+# 개업 현황 데이터를 가져옵니다. 예시로 임의의 데이터를 사용합니다.
+# 실제로는 CSV 파일 등에서 데이터를 로드해야 합니다.
+import pandas as pd
+
+data = {
+    'gu': ['강남구', '강동구', '강북구', '강서구', '관악구'],  # 실제 구 이름들
+    'open': [20, 30, 15, 25, 10]  # 예시 개업 현황 데이터
+}
+df = pd.DataFrame(data)
+
+# GeoDataFrame에 데이터를 병합합니다.
+gdf = gdf.merge(df, left_on='gu_name_column', right_on='gu', how='left')  # 'gu_name_column'을 실제 컬럼명으로 수정
+
+# 지도 그리기
+fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+gdf.boundary.plot(ax=ax)
+gdf.plot(column='open', ax=ax, legend=True,
+         legend_kwds={'label': "5년간 서울 시군구별 편의점 개업현황",
+                      'orientation': "horizontal"},
+         cmap='Blues')
+
+# 시군구 이름과 개업 현황 텍스트 추가
+for idx, row in gdf.iterrows():
+    plt.text(row.geometry.centroid.x, row.geometry.centroid.y,
+             f"{row['gu']}\n{row['open']}", fontsize=12, family='DejaVu Sans')
+
+# 범례 위치 조정
+leg = ax.get_legend()
+leg.set_bbox_to_anchor((0.15, 0.85, 0.2, 0.2))
+
+plt.axis('off')
+plt.show()
+
