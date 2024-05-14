@@ -1,9 +1,9 @@
 #1 편의점 입지 - 5년간 서울 시군구별 개업 현황
 ggplot() +
-geom_polygon(data = M, aes(x = long, y = lat, grup=group, fill = open), color= "white") +
-scale_fill_gradient(low = "#D4F4FA", high = "#3DB7CC", space = "Lab", guidel = "colourbar") +
-labs(fill = "5년간 서울 시군구별 편의점 개업현황") +
-theme_vold() + 
-theme(legned.position = c(.15, .85) +
-theme(text = element_text(size=16, family='pen2')) +
-geon_text(data = gu_name, aexx = long, y = lat, label = paste(seoulgu, open, sep = "\n"), family = 'pen2'))
+  geom_polygon(data = M, aes(x = long, y = lat, group = group, fill = open), color = "white") +
+  scale_fill_gradient(low = "#D4F4FA", high = "#3DB7CC", space = "Lab", guide = "colourbar") +
+  labs(fill = "5년간 서울 시군구별 편의점 개업현황") +
+  theme_void() + 
+  theme(legend.position = c(.15, .85),
+        text = element_text(size=16, family='pen2')) +
+  geom_text(data = gu_name, aes(x = long, y = lat, label = paste(seoulgu, open, sep = "\n")), family = 'pen2')
