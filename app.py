@@ -71,7 +71,7 @@ combined_df = pd.concat([accessibility, warehouse], ignore_index=True)
 # combined_df.to_csv('공항항만물류창고_ xy.csv',encoding='CP949')
 
 
-GOOGLE_API_KEY = 'AIzaSyBm7OlLkE7iwIUBl--oI9il3lCVhqlU1Ts'
+GOOGLE_API_KEY = ''
 # 주소를 좌표로 변환하는 함수
 def geocode_address(address):
     url = f'https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={GOOGLE_API_KEY}'
@@ -235,7 +235,7 @@ def make_regionalcode(user_addresses, user_locations):
             "format": "json",
             "type": "PARCEL",
             "point": point,  # x,y 좌표
-            "key": "1442D41A-EDD8-31BE-AE34-999CED093840",  # 브이월드 인증키
+            "key": '',  # 브이월드 인증키
         }
 
         response = requests.get(apiurl, params=params)
@@ -292,7 +292,7 @@ def get_land_price(user_df):
 
         url = "http://api.vworld.kr/ned/data/getIndvdLandPriceAttr"
         params = {
-            "key": "FC795C4B-984A-3EFB-B383-9E1CAFEA6371",
+            "key": '',
             "pnu": code,  # 유저 입력주소의 법정명코드
             "stdrYear": "2023",
             "format": "json",
